@@ -1,6 +1,6 @@
 import {Switch, Route, Link} from 'react-router-dom'
 
-import ROUTES from './constants/routes'
+import ROUTES from 'constants/routes'
 
 const Index = () => {
     return (
