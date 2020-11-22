@@ -12,7 +12,8 @@ const calendar = () => {
             last: {
                 date: lastDate.getDate(),
                 day: lastDate.getDay()
-            }
+            },
+            total: firstDate.getDay() + lastDate.getDate() + 6 - lastDate.getDay()
         }
     }
 

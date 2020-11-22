@@ -1,6 +1,6 @@
 export const DAY = {
     MODAY: 'monday',
-    SUDAY: 'sunday'
+    SUNDAY: 'sunday'
 }
 
 export const days = {

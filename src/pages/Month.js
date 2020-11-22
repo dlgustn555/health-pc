@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames/bind'
 
 import calendar from 'utils/calendar'
@@ -8,22 +8,33 @@ import styles from './Month.module.scss'
 
 import Header from 'components/month/Header'
 import Date from 'components/month/Date'
+import FixedArea from 'components/common/FixedArea'
 
 const cx = classNames.bind(styles)
 
 const Month = () => {
-    const {thisMonth: {first, last}} = calendar
+    const bodyRef = useRef(null)
+    const [paddingBottom, setPaddingBottom] = useState('')
+
+    const {thisMonth: {first, last, total}} = calendar
+    
+    useEffect(() => {
+        const {offsetHeight} = bodyRef.current
+        setPaddingBottom(Math.floor(offsetHeight/2))
+    }, [])
 
     return (
-        <div className={cx('month-wrapper')}>
-            <Header start={DAY.SUNDAY} />
-            {Array.from(Array(42)).map((_, index) => {
+        <div ref={bodyRef} className={cx('month-wrapper')} style={{paddingBottom: paddingBottom}}>
+            <FixedArea>
+                <Header start={DAY.SUNDAY} />
+            </FixedArea>
+            {Array.from(Array(total)).map((_, index) => {
                 const date = first.day <= index ? first.date + index : null
 
                 return (
                     <Date key={index} date={date > last.date ? null : date} />
                 )
-            }) }
+            })}
         </div>
     );
 };
