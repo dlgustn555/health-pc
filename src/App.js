@@ -14,7 +14,7 @@ const Index = () => {
                 <Link to={ROUTES.PRACTICE}>Practice 작성</Link>
             </li>
             <li>
-                테스트!!!22331111111
+                테스트!!!22331111111 
             </li>
         </ul>
     )
