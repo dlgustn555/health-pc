@@ -1,0 +1,13 @@
+.header {
+  ul {
+    padding: 0;
+  }
+  ul > li {
+    text-align: center;
+    list-style-type: none;
+    float: left;
+    display: block;
+    width: 149px;
+    border: solid black 0.5px;
+  }
+}

@@ -1,7 +1,12 @@
 const routes = {
     HOME: '/',
-    PLAN: '/plan',
-    PRACTICE: '/practice'
+    PLAN: {
+        MAIN: '/plan'
+    },
+    PRACTICE: {
+        MAIN: '/practice'
+    },
+    MONTH: '/month'
 }
 
 export default routes
