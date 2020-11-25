@@ -1,3 +1,6 @@
 #!/bin/bash
 
-cp -r /var/lib/jenkins/workspace/health-pc/build /home/leehyunsu/deploy/health-pc
+cd /home/leehyunsu/apps/nginx/sbin
+sudo ./nginx -s stop
+sleep 10
+sudo ./nginx
