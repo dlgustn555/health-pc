@@ -22,8 +22,8 @@ const calendar = () => {
         month: date.getMonth()
     })
 
-    const toDate =new Date()
-    
+    const toDate = new Date()
+
     const {year, month} = getYearMonth(toDate)
     const date = toDate.getDate()
 
@@ -35,7 +35,7 @@ const calendar = () => {
 
     return {
         year,
-        month,
+        month: month + 1,
         date,
         thisMonth: getMonthInfo(year, month),
         prevMonth: getMonthInfo(prevMonthDate.getFullYear(), prevMonthDate.getMonth()),
