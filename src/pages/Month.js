@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames/bind'
 
+import api from 'utils/api'
 import calendar from 'utils/calendar'
 import {DAY} from 'constants/calendar'
 
@@ -16,11 +17,23 @@ const Month = () => {
     const bodyRef = useRef(null)
     const [paddingBottom, setPaddingBottom] = useState('')
 
-    const {thisMonth: {first, last, total}} = calendar
+    const {thisMonth: {first, last, total, year, month}, prevMonth, nextMonth} = calendar
     
     useEffect(() => {
         const {offsetHeight} = bodyRef.current
-        setPaddingBottom(Math.floor(offsetHeight/2))
+        setPaddingBottom(Math.floor(offsetHeight))
+    }, [])
+
+    useEffect(() => {
+        api.get(`/diary/month`, {params: {
+            prevMonth: `${prevMonth.year}.${prevMonth.month}`,
+            thisMonth: `${year}.${month}`,
+            nextMonth: `${nextMonth.year}.${nextMonth.month}`
+        }}).then(({success, result: {data}}) => {
+            if (!success) {
+                return
+            }
+        })
     }, [])
 
     return (

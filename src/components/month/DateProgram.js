@@ -33,7 +33,7 @@ const DateProgram = ({date}) => {
     // 프로그래명 DB 업데이트를 한다
     const handleProramPatch = async (program) => {
         const {
-            data: {success, result}
+            success, result: {data}
         } = await api.patch('/diary/program', {
             program,
             year,
@@ -46,7 +46,7 @@ const DateProgram = ({date}) => {
             return
         }
 
-        setProgram(result.data.program)
+        setProgram(data.program)
     }
 
     // input 태그 포커스 아웃이벤트를 처리한다.

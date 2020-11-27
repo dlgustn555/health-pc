@@ -5,6 +5,8 @@ const calendar = () => {
         lastDate.setDate(0)
 
         return {
+            year, 
+            month: month + 1,
             first: {
                 date: 1,
                 day: firstDate.getDay()
