@@ -7,8 +7,9 @@ import api from 'utils/api'
 import calendar from 'utils/calendar'
 import {DAY} from 'constants/calendar'
 
-import styles from './Month.module.scss'
+import styles from 'scss/Month.module.scss'
 
+import DateSelector from 'components/month/DateSelector'
 import Header from 'components/month/Header'
 import Date from 'components/month/Date'
 import FixedArea from 'components/common/FixedArea'
@@ -48,6 +49,7 @@ const Month = () => {
                 style={{paddingBottom: paddingBottom}}
             >
                 <FixedArea>
+                    <DateSelector />
                     <Header start={DAY.SUNDAY} />
                 </FixedArea>
                 {Array.from(Array(total)).map((_, index) => {
