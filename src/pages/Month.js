@@ -1,5 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react'
 import classNames from 'classnames/bind'
+
+import {MonthContext} from 'contexts'
 
 import api from 'utils/api'
 import calendar from 'utils/calendar'
@@ -16,40 +18,46 @@ const cx = classNames.bind(styles)
 const Month = () => {
     const bodyRef = useRef(null)
     const [paddingBottom, setPaddingBottom] = useState('')
+    const [diaries, setDiaries] = useState([])
 
-    const {thisMonth: {first, last, total, year, month}, prevMonth, nextMonth} = calendar
-    
+    const {
+        thisMonth: {first, last, total, year, month}
+    } = calendar
+
     useEffect(() => {
         const {offsetHeight} = bodyRef.current
         setPaddingBottom(Math.floor(offsetHeight))
     }, [])
 
     useEffect(() => {
-        api.get(`/diary/month`, {params: {
-            prevMonth: `${prevMonth.year}.${prevMonth.month}`,
-            thisMonth: `${year}.${month}`,
-            nextMonth: `${nextMonth.year}.${nextMonth.month}`
-        }}).then(({success, result: {data}}) => {
+        api.get(`/diary/month`, {
+            params: {year, month}
+        }).then(({success, result: {data}}) => {
             if (!success) {
                 return
             }
+            setDiaries(data)
         })
     }, [])
 
     return (
-        <div ref={bodyRef} className={cx('month-wrapper')} style={{paddingBottom: paddingBottom}}>
-            <FixedArea>
-                <Header start={DAY.SUNDAY} />
-            </FixedArea>
-            {Array.from(Array(total)).map((_, index) => {
-                const date = first.day <= index ? first.date + index : null
+        <MonthContext.Provider value={diaries}>
+            <div
+                ref={bodyRef}
+                className={cx('month-wrapper')}
+                style={{paddingBottom: paddingBottom}}
+            >
+                <FixedArea>
+                    <Header start={DAY.SUNDAY} />
+                </FixedArea>
+                {Array.from(Array(total)).map((_, index) => {
+                    const date = first.day <= index ? first.date + index : null
 
-                return (
-                    <Date key={index} date={date > last.date ? null : date} />
-                )
-            })}
-        </div>
-    );
-};
+                    return <Date key={index} date={date > last.date ? null : date} />
+                })}
+            </div>
+        </MonthContext.Provider>
+    )
+}
 
-export default Month;
+export default Month

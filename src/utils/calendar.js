@@ -5,8 +5,8 @@ const calendar = () => {
         lastDate.setDate(0)
 
         return {
-            year, 
-            month: month + 1,
+            year,
+            month,
             first: {
                 date: 1,
                 day: firstDate.getDay()
@@ -37,7 +37,7 @@ const calendar = () => {
 
     return {
         year,
-        month: month + 1,
+        month,
         date,
         thisMonth: getMonthInfo(year, month),
         prevMonth: getMonthInfo(prevMonthDate.getFullYear(), prevMonthDate.getMonth()),

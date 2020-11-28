@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react'
 import api from 'utils/api'
 import className from 'classnames/bind'
 
+import {MonthContext} from 'contexts'
 import calendar from 'utils/calendar'
 
 import styles from './Date.module.scss'
@@ -33,7 +34,8 @@ const DateProgram = ({date}) => {
     // 프로그래명 DB 업데이트를 한다
     const handleProramPatch = async (program) => {
         const {
-            success, result: {data}
+            success,
+            result: {data}
         } = await api.patch('/diary/program', {
             program,
             year,
@@ -75,20 +77,30 @@ const DateProgram = ({date}) => {
     }, [hide])
 
     return (
-        <div className={cx('program')}>
-            <span className={cx({toDate: isToDate})}>{date}</span>
-            <div onClick={handleToggleProramArea}>
-                <span className={cx({hide: !hide})}>{program}</span>
-                <input
-                    ref={inputRef}
-                    className={cx('input', {hide: hide})}
-                    type="text"
-                    onBlur={handleProgramBlur}
-                    onChange={handleProgramChange}
-                    onKeyUp={handleKeyUp}
-                />
-            </div>
-        </div>
+        <MonthContext.Consumer>
+            {(diaries) => {
+                const {program} = diaries.find((diary) => {
+                    return new Date(diary.date).getDate() === date
+                }) || {program: ''}
+
+                return (
+                    <div className={cx('program')}>
+                        <span className={cx({toDate: isToDate})}>{date}</span>
+                        <div onClick={handleToggleProramArea}>
+                            <span className={cx({hide: !hide})}>{program}</span>
+                            <input
+                                ref={inputRef}
+                                className={cx('input', {hide: hide})}
+                                type="text"
+                                onBlur={handleProgramBlur}
+                                onChange={handleProgramChange}
+                                onKeyUp={handleKeyUp}
+                            />
+                        </div>
+                    </div>
+                )
+            }}
+        </MonthContext.Consumer>
     )
 }
 
