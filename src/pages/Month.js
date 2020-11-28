@@ -38,7 +38,7 @@ const Month = () => {
             }
             setDiaries(data)
         })
-    }, [])
+    }, [year, month])
 
     return (
         <MonthContext.Provider value={diaries}>

@@ -13,8 +13,8 @@ const DateProgram = ({date}) => {
     const {year, month, date: toDate} = calendar
     const isToDate = toDate === date
 
-    const [program, setProgram] = useState('')
     const [hide, setHide] = useState(true)
+    const [updatdProgram, setUpdatedProgram] = useState('')
     const inputRef = useRef(null)
     let timeoutId = 0
 
@@ -48,7 +48,7 @@ const DateProgram = ({date}) => {
             return
         }
 
-        setProgram(data.program)
+        setUpdatedProgram(data.program)
     }
 
     // input 태그 포커스 아웃이벤트를 처리한다.
@@ -79,15 +79,17 @@ const DateProgram = ({date}) => {
     return (
         <MonthContext.Consumer>
             {(diaries) => {
-                const {program} = diaries.find((diary) => {
-                    return new Date(diary.date).getDate() === date
-                }) || {program: ''}
+                const {program} = diaries.find((diary) => diary.date === date) || {
+                    program: ''
+                }
 
                 return (
                     <div className={cx('program')}>
                         <span className={cx({toDate: isToDate})}>{date}</span>
                         <div onClick={handleToggleProramArea}>
-                            <span className={cx({hide: !hide})}>{program}</span>
+                            <span className={cx({hide: !hide})}>
+                                {program || updatdProgram}
+                            </span>
                             <input
                                 ref={inputRef}
                                 className={cx('input', {hide: hide})}
