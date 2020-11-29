@@ -10,7 +10,7 @@ import styles from './Date.module.scss'
 const cx = className.bind(styles)
 
 const DateProgram = ({date}) => {
-    const {year, month, date: toDate} = calendar
+    const {date: toDate} = calendar
     const isToDate = toDate === date
 
     const [hide, setHide] = useState(true)
@@ -33,6 +33,7 @@ const DateProgram = ({date}) => {
 
     // 프로그래명 DB 업데이트를 한다
     const handleProramPatch = async (program) => {
+        const {dataset: {year, month}} = inputRef.current
         const {
             success,
             result: {data}
@@ -78,7 +79,7 @@ const DateProgram = ({date}) => {
 
     return (
         <MonthContext.Consumer>
-            {(diaries) => {
+            {({diaries, year, month}) => {
                 const {program} = diaries.find((diary) => diary.date === date) || {
                     program: ''
                 }
@@ -91,6 +92,8 @@ const DateProgram = ({date}) => {
                                 {program || updatdProgram}
                             </span>
                             <input
+                                data-year={year}
+                                data-month={month}
                                 ref={inputRef}
                                 className={cx('input', {hide: hide})}
                                 type="text"

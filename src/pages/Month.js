@@ -17,13 +17,14 @@ import FixedArea from 'components/common/FixedArea'
 const cx = classNames.bind(styles)
 
 const Month = () => {
+    const {toDate, getMonthInfo} = calendar
+
     const bodyRef = useRef(null)
     const [paddingBottom, setPaddingBottom] = useState('')
     const [diaries, setDiaries] = useState([])
 
-    const {
-        thisMonth: {first, last, total, year, month}
-    } = calendar
+    const [year, setYear] = useState(toDate.getFullYear())
+    const [month, setMonth] = useState(toDate.getMonth())
 
     useEffect(() => {
         const {offsetHeight} = bodyRef.current
@@ -41,17 +42,31 @@ const Month = () => {
         })
     }, [year, month])
 
+    const {first, last, total} = getMonthInfo(year, month)
+    console.log(getMonthInfo(year, month))
+
+    const action = {
+        setYear,
+        setMonth
+    }
+
     return (
-        <MonthContext.Provider value={diaries}>
+        <MonthContext.Provider value={{
+            year,
+            month,
+            diaries,
+            action
+        }}>
             <div
                 ref={bodyRef}
                 className={cx('month-wrapper')}
                 style={{paddingBottom: paddingBottom}}
             >
                 <FixedArea>
-                    <DateSelector />
+                    <DateSelector year={year} month={month} action={action} />
                     <Header start={DAY.SUNDAY} />
                 </FixedArea>
+
                 {Array.from(Array(total)).map((_, index) => {
                     const date = first.day <= index ? first.date + index : null
 

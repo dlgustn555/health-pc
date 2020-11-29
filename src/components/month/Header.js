@@ -10,9 +10,9 @@ const Header = ({start = DAY.MODAY}) => {
     return (
         <div className={cx('header')}>
             <ul >
-            {days[start].map((day, key) => (
-                <li key={key}>{day}</li>
-            ))}
+                {days[start].map((day, key) => (
+                    <li key={key}>{day}</li>
+                ))}
             </ul>
         </div>
     );
