@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react'
 import api from 'utils/api'
 import className from 'classnames/bind'
 
-import {MonthContext} from 'contexts'
+import {useMonthContext} from 'contexts'
 import calendar from 'utils/calendar'
 
 import styles from './Date.module.scss'
@@ -10,6 +10,11 @@ import styles from './Date.module.scss'
 const cx = className.bind(styles)
 
 const DateProgram = ({date}) => {
+    const {diaries, year, month} = useMonthContext()
+    const {program} = diaries.find((diary) => diary.date === date) || {
+        program: ''
+    }
+
     const {date: toDate} = calendar
     const isToDate = toDate === date
 
@@ -78,14 +83,7 @@ const DateProgram = ({date}) => {
     }, [hide])
 
     return (
-        <MonthContext.Consumer>
-            {({diaries, year, month}) => {
-                const {program} = diaries.find((diary) => diary.date === date) || {
-                    program: ''
-                }
-
-                return (
-                    <div className={cx('program')}>
+        <div className={cx('program')}>
                         <span className={cx({toDate: isToDate})}>{date}</span>
                         <div onClick={handleToggleProramArea}>
                             <span className={cx({hide: !hide})}>
@@ -97,15 +95,13 @@ const DateProgram = ({date}) => {
                                 ref={inputRef}
                                 className={cx('input', {hide: hide})}
                                 type="text"
+                                value={program || updatdProgram}
                                 onBlur={handleProgramBlur}
                                 onChange={handleProgramChange}
                                 onKeyUp={handleKeyUp}
                             />
                         </div>
                     </div>
-                )
-            }}
-        </MonthContext.Consumer>
     )
 }
 
