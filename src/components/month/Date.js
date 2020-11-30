@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import className from 'classnames/bind'
 
 import ROUTES from 'constants/routes'
-import calendar from 'utils/calendar'
+import {useMonthContext} from 'contexts'
 
 import DateProgram from 'components/month/DateProgram'
 
@@ -11,27 +11,19 @@ import styles from './Date.module.scss'
 const cx = className.bind(styles)
 
 const Date = ({date = null}) => {
-    const {year, month} = calendar
+    const {year, month} = useMonthContext()
 
     return (
         <div className={cx('wrapper')}>
             <DateProgram date={date} />
             <ul>
                 <li>
-                    <Link
-                        to={`${ROUTES.PLAN.MAIN}?date=${year}${month}${
-                            date < 10 ? '0' : ''
-                        }${date}`}
-                    >
+                    <Link to={`${ROUTES.PLAN}?year=${year}&month=${month}&date=${date}`} >
                         PLAN
                     </Link>
                 </li>
                 <li>
-                    <Link
-                        to={`${ROUTES.PRACTICE.MAIN}?date=${year}${month}${
-                            date < 10 ? '0' : ''
-                        }${date}`}
-                    >
+                    <Link to={`${ROUTES.PRACTICE}?date=${date}`} >
                         PRACTICE
                     </Link>
                 </li>
