@@ -40,10 +40,13 @@ const Month = () => {
             }
             setDiaries(data)
         })
+
+        return () => {
+            setDiaries([])
+        }
     }, [year, month])
 
     const {first, last, total} = getMonthInfo(year, month)
-    console.log(getMonthInfo(year, month))
 
     const action = {
         setYear,

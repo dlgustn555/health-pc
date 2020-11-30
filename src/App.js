@@ -18,6 +18,7 @@ const Index = () => {
 }
 
 const Month = lazy(() => import('pages/Month'))
+const Plan = lazy(() => import('pages/Plan'))
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
             <Switch>
                 <Route exact path={ROUTES.HOME} component={Index} />
                 <Route exact path={ROUTES.MONTH} component={Month} />
+                <Route exact path={ROUTES.PLAN} component={Plan} />
             </Switch>
         </Suspense>
     )
