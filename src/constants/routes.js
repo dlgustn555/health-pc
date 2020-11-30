@@ -1,11 +1,7 @@
 const routes = {
     HOME: '/',
-    PLAN: {
-        MAIN: '/plan'
-    },
-    PRACTICE: {
-        MAIN: '/practice'
-    },
+    PLAN: '/plan',
+    PRACTICE: '/practice',
     MONTH: '/month'
 }
 
