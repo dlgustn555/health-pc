@@ -4,18 +4,24 @@ import className from 'classnames/bind'
 
 import ROUTES from 'constants/routes'
 import {useMonthContext} from 'contexts'
+import calendar from 'utils/calendar'
 
-import DateProgram from 'components/month/DateProgram'
+import ProgramName from 'components/month/ProgramName'
 
 import styles from './Date.module.scss'
 const cx = className.bind(styles)
 
 const Date = ({date = null}) => {
     const {year, month} = useMonthContext()
+    const {date: toDate} = calendar
+    const isToDate = toDate === date
 
     return (
         <div className={cx('wrapper')}>
-            <DateProgram date={date} />
+            <div className={cx('program')}>
+                    <span className={cx({toDate: isToDate})}>{date}</span>
+                    <ProgramName />
+                    </div>
             <ul>
                 <li>
                     <Link to={`${ROUTES.PLAN}?year=${year}&month=${month}&date=${date}`} >

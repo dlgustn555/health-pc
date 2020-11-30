@@ -2,24 +2,15 @@ import React, {useState, useRef, useEffect} from 'react'
 import api from 'utils/api'
 import className from 'classnames/bind'
 
-import {useMonthContext} from 'contexts'
 import calendar from 'utils/calendar'
 
 import styles from './Date.module.scss'
 
 const cx = className.bind(styles)
 
-const DateProgram = ({date}) => {
-    const {diaries, year, month} = useMonthContext()
-    const {program} = diaries.find((diary) => diary.date === date) || {
-        program: ''
-    }
-
-    const {date: toDate} = calendar
-    const isToDate = toDate === date
-
+const ProgramName = ({diary: {program, year, month, date}}) => {
     const [hide, setHide] = useState(true)
-    const [updatdProgram, setUpdatedProgram] = useState('')
+    const [updatdProgram, setUpdatedProgram] = useState(program)
     const inputRef = useRef(null)
     let timeoutId = 0
 
@@ -30,6 +21,8 @@ const DateProgram = ({date}) => {
 
     // 프로그램명 텍스트 변경을 처리한다.
     const handleProgramChange = ({currentTarget}) => {
+        console.log(currentTarget.value)
+        inputRef.current.value = currentTarget.value
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
             handleProramPatch(currentTarget.value)
@@ -38,7 +31,7 @@ const DateProgram = ({date}) => {
 
     // 프로그래명 DB 업데이트를 한다
     const handleProramPatch = async (program) => {
-        const {dataset: {year, month}} = inputRef.current
+        console.log(program)
         const {
             success,
             result: {data}
@@ -83,26 +76,23 @@ const DateProgram = ({date}) => {
     }, [hide])
 
     return (
-        <div className={cx('program')}>
-                        <span className={cx({toDate: isToDate})}>{date}</span>
-                        <div onClick={handleToggleProramArea}>
-                            <span className={cx({hide: !hide})}>
-                                {program || updatdProgram}
-                            </span>
-                            <input
-                                data-year={year}
-                                data-month={month}
-                                ref={inputRef}
-                                className={cx('input', {hide: hide})}
-                                type="text"
-                                value={program || updatdProgram}
-                                onBlur={handleProgramBlur}
-                                onChange={handleProgramChange}
-                                onKeyUp={handleKeyUp}
-                            />
-                        </div>
-                    </div>
+<div onClick={handleToggleProramArea}>
+<span className={cx({hide: !hide})}>
+    {program || updatdProgram}
+            </span>
+            <input
+                data-year={year}
+                data-month={month}
+                ref={inputRef}
+                className={cx('input', {hide: hide})}
+                type="text"
+                value={program || updatdProgram}
+                onBlur={handleProgramBlur}
+                onChange={handleProgramChange}
+                onKeyUp={handleKeyUp}
+            />
+        </div>
     )
 }
 
-export default DateProgram
+export default ProgramName

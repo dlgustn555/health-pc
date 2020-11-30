@@ -4,15 +4,20 @@ import {useLocation} from 'react-router-dom'
 
 import api from 'utils/api'
 
+import ProgramName from 'components/month/ProgramName'
+
 const Plan = () => {
     const {search} = useLocation()
     const {year, month, date} = queryStrign.parse(search)
 
-    const [diary, setDiary] = useState(null)
+    const [diary, setDiary] = useState({
+        program: '',
+        plan: ''
+    })
 
     useEffect(() => {
         api.get('/diary', {
-            paramse: {year, month, date}
+            params: {year, month, date}
         }).then(({success, result: {data}}) => {
             if (!success) {
                 return
@@ -21,6 +26,23 @@ const Plan = () => {
         })
     }, [])
 
-    return (<div>{year}, {month}, {date}</div>)
+    return (
+        <div>
+            <p>{year}. {month}. {date}</p>
+            <div>
+                <label>
+                    운동명
+                </label>
+                :
+                <ProgramName diary={diary} />
+            </div>
+            <div>
+                <label>PLAN</label>
+                :
+                <span>{diary.plan}</span>
+                <textarea />
+            </div>
+        </div>
+    )
 }
 export default Plan;
