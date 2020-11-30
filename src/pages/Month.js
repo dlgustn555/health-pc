@@ -68,7 +68,8 @@ const Month = () => {
                 </FixedArea>
 
                 {Array.from(Array(total)).map((_, index) => {
-                    const date = first.day <= index ? first.date + index : null
+                    const date = index < first.day ? null : index === first.day ? 1 : index - first.day
+                
 
                     return <Date key={index} date={date > last.date ? null : date} />
                 })}
