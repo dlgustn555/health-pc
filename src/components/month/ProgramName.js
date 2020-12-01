@@ -1,16 +1,19 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef, useEffect, useContext} from 'react'
 import api from 'utils/api'
 import className from 'classnames/bind'
 
-import calendar from 'utils/calendar'
+import {MonthContext} from 'contexts'
 
 import styles from './Date.module.scss'
 
 const cx = className.bind(styles)
 
-const ProgramName = ({diary: {program, year, month, date}}) => {
+const ProgramName = ({diary: {program = ''} = {}, date}) => {
+    const {year, month} = useContext(MonthContext)
+
     const [hide, setHide] = useState(true)
     const [updatdProgram, setUpdatedProgram] = useState(program)
+
     const inputRef = useRef(null)
     let timeoutId = 0
 
@@ -20,18 +23,15 @@ const ProgramName = ({diary: {program, year, month, date}}) => {
     }
 
     // 프로그램명 텍스트 변경을 처리한다.
-    const handleProgramChange = ({currentTarget}) => {
-        console.log(currentTarget.value)
-        inputRef.current.value = currentTarget.value
+    const handleProgramChange = ({currentTarget: {value}}) => {
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
-            handleProramPatch(currentTarget.value)
+            handleProramPatch(value)
         }, 500)
     }
 
     // 프로그래명 DB 업데이트를 한다
     const handleProramPatch = async (program) => {
-        console.log(program)
         const {
             success,
             result: {data}
@@ -76,17 +76,15 @@ const ProgramName = ({diary: {program, year, month, date}}) => {
     }, [hide])
 
     return (
-<div onClick={handleToggleProramArea}>
-<span className={cx({hide: !hide})}>
-    {program || updatdProgram}
-            </span>
+        <div onClick={handleToggleProramArea}>
+            <span className={cx({hide: !hide})}>{updatdProgram}</span>
             <input
                 data-year={year}
                 data-month={month}
                 ref={inputRef}
                 className={cx('input', {hide: hide})}
                 type="text"
-                value={program || updatdProgram}
+                value={updatdProgram}
                 onBlur={handleProgramBlur}
                 onChange={handleProgramChange}
                 onKeyUp={handleKeyUp}

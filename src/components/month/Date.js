@@ -19,19 +19,17 @@ const Date = ({date = null}) => {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('program')}>
-                    <span className={cx({toDate: isToDate})}>{date}</span>
-                    <ProgramName />
-                    </div>
+                <span className={cx({toDate: isToDate})}>{date}</span>
+                <ProgramName date={date} />
+            </div>
             <ul>
                 <li>
-                    <Link to={`${ROUTES.PLAN}?year=${year}&month=${month}&date=${date}`} >
+                    <Link to={`${ROUTES.PLAN}?year=${year}&month=${month}&date=${date}`}>
                         PLAN
                     </Link>
                 </li>
                 <li>
-                    <Link to={`${ROUTES.PRACTICE}?date=${date}`} >
-                        PRACTICE
-                    </Link>
+                    <Link to={`${ROUTES.PRACTICE}?date=${date}`}>PRACTICE</Link>
                 </li>
             </ul>
         </div>
