@@ -9,12 +9,13 @@ import styles from './Program.module.scss'
 
 const cx = className.bind(styles)
 
-const Program = ({param, type, handleAddDiary}) => {
+const Program = ({program, type, handleAddDiary}) => {
     const {search} = useLocation()
     const {year, month, date} = queryStrign.parse(search)
 
     const [hide, setHide] = useState(true)
-    const [text, setText] = useState(param || '')
+    const [text, setText] = useState(program || '')
+    console.log(program || '')
 
     const inputRef = useRef(null)
 
@@ -45,22 +46,21 @@ const Program = ({param, type, handleAddDiary}) => {
         inputRef.current.focus()
     }, [hide])
 
+    console.log(text)
     return (
         <div className={cx('diary')}>
-            <div>
-                <div className={cx('field', {hide: !hide})} onClick={handleToggleHide}>
-                    <span>{text}</span>
-                </div>
-                <input
-                    ref={inputRef}
-                    className={cx({hide})}
-                    type="text"
-                    value={text}
-                    onKeyUp={handleKeyUp}
-                    onBlur={handleBlur}
-                    onChange={handleChageText}
-                />
+            <div className={cx('field', {hide: !hide})} onClick={handleToggleHide}>
+                <span>{text}</span>
             </div>
+            <input
+                ref={inputRef}
+                className={cx({hide})}
+                type="text"
+                value={text}
+                onKeyUp={handleKeyUp}
+                onBlur={handleBlur}
+                onChange={handleChageText}
+            />
         </div>
     )
 }

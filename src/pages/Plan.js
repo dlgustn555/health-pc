@@ -8,7 +8,7 @@ import api from 'utils/api'
 import ProgramName from 'components/month/ProgramName'
 import Program from 'components/month/Program'
 
-import styles from './Program.module.scss'
+import styles from './Plan.module.scss'
 
 import {DIARY_TYPE} from 'constants/calendar'
 
@@ -20,7 +20,7 @@ const Plan = () => {
 
     const [diary, setDiary] = useState({
         program: '',
-        plan: '[{}]'
+        plan: '[]'
     })
 
     const handleAddDiary = () => {
@@ -34,11 +34,12 @@ const Plan = () => {
             if (!success) {
                 return
             }
+            console.log(data)
             setDiary(data)
         })
     }, [year, month, date])
 
-    const plans = JSON.parse(diary.plan || '')
+    const plans = JSON.parse(diary.plan || '[]')
     plans.push('')
 
     return (
@@ -49,13 +50,14 @@ const Plan = () => {
             <p>PLAN</p>
             <ProgramName diary={diary} />
             {plans.map((plan, index) => (
-                <Program
-                    key={index}
-                    index={index}
-                    param={plan}
-                    type={DIARY_TYPE.PLAN}
-                    handleAddDiary={handleAddDiary}
-                />
+                <div key={index}>
+                    <Program
+                        index={index}
+                        program={plan}
+                        type={DIARY_TYPE.PLAN}
+                        handleAddDiary={handleAddDiary}
+                    />
+                </div>
             ))}
         </div>
     )
