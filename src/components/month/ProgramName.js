@@ -4,7 +4,7 @@ import className from 'classnames/bind'
 
 import {MonthContext} from 'contexts'
 
-import styles from './Date.module.scss'
+import styles from './ProgramName.module.scss'
 
 const cx = className.bind(styles)
 
@@ -24,6 +24,7 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
 
     // 프로그램명 텍스트 변경을 처리한다.
     const handleProgramChange = ({currentTarget: {value}}) => {
+        setUpdatedProgram(value)
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
             handleProramPatch(value)
@@ -32,10 +33,7 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
 
     // 프로그래명 DB 업데이트를 한다
     const handleProramPatch = async (program) => {
-        const {
-            success,
-            result: {data}
-        } = await api.patch('/diary/program', {
+        const {success} = await api.patch('/diary/program', {
             program,
             year,
             month,
@@ -46,8 +44,6 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
             alert('업데이트 실패')
             return
         }
-
-        setUpdatedProgram(data.program)
     }
 
     // input 태그 포커스 아웃이벤트를 처리한다.
@@ -76,7 +72,7 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
     }, [hide])
 
     return (
-        <div onClick={handleToggleProramArea}>
+        <div onClick={handleToggleProramArea} className={cx('program')}>
             <span className={cx({hide: !hide})}>{updatdProgram}</span>
             <input
                 data-year={year}

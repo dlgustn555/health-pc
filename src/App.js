@@ -6,7 +6,9 @@ import ROUTES from 'constants/routes'
 const Index = () => {
     return (
         <ul>
-            <li><Link to={ROUTES.MONTH}>Month</Link></li>
+            <li>
+                <Link to={ROUTES.MONTH}>Month</Link>
+            </li>
             <li>
                 <Link to={ROUTES.PLAN}>Plan 작성</Link>
             </li>

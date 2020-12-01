@@ -3,21 +3,13 @@
     width: 149px;
     height: 150px;
     border: solid black 0.5px;
-    .program {
-        height: 24px;
+    .date {
         display: flex;
-        div {
-            width: 100%;
-            cursor: pointer;
-        }
     }
     .toDate {
         background: slateblue;
     }
-    .hide {
-        display: none;
-    }
-    .input {
-        width: 80%;
+    .program {
+        text-align: center;
     }
 }

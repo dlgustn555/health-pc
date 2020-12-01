@@ -18,8 +18,8 @@ const Date = ({date = null}) => {
 
     return (
         <div className={cx('wrapper')}>
+            <span className={cx('date', {toDate: isToDate})}>{date}</span>
             <div className={cx('program')}>
-                <span className={cx({toDate: isToDate})}>{date}</span>
                 <ProgramName date={date} />
             </div>
             <ul>
