@@ -1,21 +1,18 @@
-import React, {useState, useRef, useEffect, useContext} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import api from 'utils/api'
 import className from 'classnames/bind'
 
-import {MonthContext} from 'contexts'
+import {useRecoilValue} from 'recoil'
+import {getDiary} from 'stores/DiaryStore'
 
 import styles from './ProgramName.module.scss'
-
 const cx = className.bind(styles)
 
-const ProgramName = ({diary: {program = ''} = {}, date}) => {
-    const {year, month} = useContext(MonthContext)
-
+const ProgramName = ({year, month, date}) => {
+    const diary = useRecoilValue(getDiary({year, month, date}))
+    
     const [hide, setHide] = useState(true)
-    const [updatdProgram, setUpdatedProgram] = useState(program)
-
     const inputRef = useRef(null)
-    let timeoutId = 0
 
     // dispaly 상태를 토글한다.
     const handleToggleProramArea = () => {
@@ -24,11 +21,8 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
 
     // 프로그램명 텍스트 변경을 처리한다.
     const handleProgramChange = ({currentTarget: {value}}) => {
-        setUpdatedProgram(value)
-        clearTimeout(timeoutId)
-        timeoutId = setTimeout(() => {
-            handleProramPatch(value)
-        }, 500)
+        diary.program = value
+        // setDiary({...diary, program: value})
     }
 
     // 프로그래명 DB 업데이트를 한다
@@ -44,11 +38,11 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
             alert('업데이트 실패')
             return
         }
+        // setDiary(data)
     }
 
     // input 태그 포커스 아웃이벤트를 처리한다.
     const handleProgramBlur = async ({currentTarget}) => {
-        clearTimeout(timeoutId)
         await handleProramPatch(currentTarget.value)
         handleToggleProramArea()
     }
@@ -73,14 +67,12 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
 
     return (
         <div onClick={handleToggleProramArea} className={cx('program')}>
-            <span className={cx({hide: !hide})}>{updatdProgram}</span>
+            <span className={cx({hide: !hide})}>{diary.program}</span>
             <input
-                data-year={year}
-                data-month={month}
                 ref={inputRef}
                 className={cx('input', {hide: hide})}
                 type="text"
-                value={updatdProgram}
+                value={diary.program}
                 onBlur={handleProgramBlur}
                 onChange={handleProgramChange}
                 onKeyUp={handleKeyUp}

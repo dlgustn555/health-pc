@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState, Suspense} from 'react'
 import classNames from 'classnames/bind'
 
-import {MonthContext} from 'contexts'
+import {useRecoilValue, useSetRecoilState} from 'recoil'
+import {getMonthDiary, diariesState, selectedMonthState} from 'stores/DiaryStore'
 
-import api from 'utils/api'
 import calendar from 'utils/calendar'
 import {DAY} from 'constants/calendar'
 
@@ -17,67 +17,36 @@ import FixedArea from 'components/common/FixedArea'
 const cx = classNames.bind(styles)
 
 const Month = () => {
-    const {toDate, getMonthInfo} = calendar
+    const {getMonthInfo} = calendar
 
     const bodyRef = useRef(null)
     const [paddingBottom, setPaddingBottom] = useState('')
-    const [diaries, setDiaries] = useState([])
 
-    const [year, setYear] = useState(toDate.getFullYear())
-    const [month, setMonth] = useState(toDate.getMonth())
+    const {year, month} = useRecoilValue(selectedMonthState)
+    const diaries = useRecoilValue(getMonthDiary({year, month}))
+    useSetRecoilState(diariesState)(diaries)
+
+    const {first, last, total} = getMonthInfo(year, month)
 
     useEffect(() => {
         const {offsetHeight} = bodyRef.current
         setPaddingBottom(Math.floor(offsetHeight))
     }, [])
 
-    useEffect(() => {
-        api.get(`/diary/month`, {
-            params: {year, month}
-        }).then(({success, result: {data}}) => {
-            if (!success) {
-                return
-            }
-            setDiaries(data)
-        })
-
-        return () => {
-            setDiaries([])
-        }
-    }, [year, month])
-
-    const {first, last, total} = getMonthInfo(year, month)
-
-    const action = {
-        setYear,
-        setMonth
-    }
-
     return (
-        <MonthContext.Provider value={{
-            year,
-            month,
-            diaries,
-            action
-        }}>
-            <div
-                ref={bodyRef}
-                className={cx('month-wrapper')}
-                style={{paddingBottom: paddingBottom}}
-            >
+        <Suspense fallback={<>Data Loading...!!</>}>
+            <div ref={bodyRef} className={cx('month-wrapper')} style={{paddingBottom: paddingBottom}}>
                 <FixedArea>
-                    <DateSelector year={year} month={month} action={action} />
+                    <DateSelector />
                     <Header start={DAY.SUNDAY} />
                 </FixedArea>
 
                 {Array.from(Array(total)).map((_, index) => {
                     const date = index < first.day ? null : index === first.day ? 1 : index - first.day + 1
-                
-
                     return <Date key={index} date={date > last.date ? null : date} />
                 })}
             </div>
-        </MonthContext.Provider>
+        </Suspense>
     )
 }
 
