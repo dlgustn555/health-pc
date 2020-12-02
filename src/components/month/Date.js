@@ -12,15 +12,20 @@ import styles from './Date.module.scss'
 const cx = className.bind(styles)
 
 const Date = ({date = null}) => {
-    const {year, month} = useMonthContext()
+    const {year, month, diaries} = useMonthContext()
     const {date: toDate} = calendar
     const isToDate = toDate === date
+    const diary = diaries.find((d) => {
+        console.log(d)
+        return +d.year === +year && +d.month === +month && +d.date === +date
+    })
 
+    console.log(diary)
     return (
         <div className={cx('wrapper')}>
             <span className={cx('date', {toDate: isToDate})}>{date}</span>
             <div className={cx('program')}>
-                <ProgramName date={date} />
+                <ProgramName diary={diary} date={date} />
             </div>
             <ul>
                 <li>

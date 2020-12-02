@@ -12,7 +12,7 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
     const {year, month} = useContext(MonthContext)
 
     const [hide, setHide] = useState(true)
-    const [updatdProgram, setUpdatedProgram] = useState(program)
+    const [updatedProgram, setUpdatedProgram] = useState()
 
     const inputRef = useRef(null)
     let timeoutId = 0
@@ -73,14 +73,14 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
 
     return (
         <div onClick={handleToggleProramArea} className={cx('program')}>
-            <span className={cx({hide: !hide})}>{updatdProgram}</span>
+            <span className={cx({hide: !hide})}>{updatedProgram || program}</span>
             <input
                 data-year={year}
                 data-month={month}
                 ref={inputRef}
                 className={cx('input', {hide: hide})}
                 type="text"
-                value={updatdProgram}
+                value={updatedProgram || program}
                 onBlur={handleProgramBlur}
                 onChange={handleProgramChange}
                 onKeyUp={handleKeyUp}

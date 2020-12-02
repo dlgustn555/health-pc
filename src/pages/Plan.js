@@ -4,6 +4,7 @@ import {useLocation} from 'react-router-dom'
 import className from 'classnames/bind'
 
 import api from 'utils/api'
+import {MonthContext} from 'contexts'
 
 import ProgramName from 'components/month/ProgramName'
 import Program from 'components/month/Program'
@@ -34,7 +35,6 @@ const Plan = () => {
             if (!success) {
                 return
             }
-            console.log(data)
             setDiary(data)
         })
     }, [year, month, date])
@@ -43,12 +43,15 @@ const Plan = () => {
     plans.push('')
 
     return (
+        <MonthContext.Provider value={{
+            year, month
+        }}>
         <div className={cx('plan')}>
             <p>
                 {year}. {+month + 1}. {date}
             </p>
             <p>PLAN</p>
-            <ProgramName diary={diary} />
+            <ProgramName diary={diary} date={date} />
             {plans.map((plan, index) => (
                 <div key={index}>
                     <Program
@@ -60,6 +63,7 @@ const Plan = () => {
                 </div>
             ))}
         </div>
+        </MonthContext.Provider>
     )
 }
 export default Plan
