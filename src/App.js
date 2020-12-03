@@ -22,6 +22,7 @@ const Index = () => {
 
 const Month = lazy(() => import('pages/Month'))
 const Plan = lazy(() => import('pages/Plan'))
+const Test = lazy(() => import('pages/Test'))
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <Route exact path={ROUTES.HOME} component={Index} />
                     <Route exact path={ROUTES.MONTH} component={Month} />
                     <Route exact path={ROUTES.PLAN} component={Plan} />
+                    <Route exact path="/test" component={Test} />
                 </Switch>
             </Suspense>
         </RecoilRoot>

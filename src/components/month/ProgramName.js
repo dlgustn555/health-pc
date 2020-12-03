@@ -1,18 +1,25 @@
 import React, {useState, useRef, useEffect} from 'react'
-import api from 'utils/api'
 import className from 'classnames/bind'
 
-import {useRecoilValue} from 'recoil'
-import {getDiary} from 'stores/DiaryStore'
+import {useRecoilState} from 'recoil'
+import {updateDiaryState} from 'stores/DiaryStore'
 
 import styles from './ProgramName.module.scss'
 const cx = className.bind(styles)
 
-const ProgramName = ({year, month, date}) => {
-    const diary = useRecoilValue(getDiary({year, month, date}))
-    
+const ProgramName = ({diary}) => {
     const [hide, setHide] = useState(true)
+    const [programText, setProgramText] = useState(diary.program)
     const inputRef = useRef(null)
+
+    const [newDiary, updateDiary] = useRecoilState(
+        updateDiaryState({
+            year: diary.year,
+            month: diary.month,
+            date: diary.date,
+            program: programText
+        })
+    )
 
     // dispaly 상태를 토글한다.
     const handleToggleProramArea = () => {
@@ -21,29 +28,18 @@ const ProgramName = ({year, month, date}) => {
 
     // 프로그램명 텍스트 변경을 처리한다.
     const handleProgramChange = ({currentTarget: {value}}) => {
-        diary.program = value
-        // setDiary({...diary, program: value})
+        setProgramText(value)
     }
 
     // 프로그래명 DB 업데이트를 한다
-    const handleProramPatch = async (program) => {
-        const {success} = await api.patch('/diary/program', {
-            program,
-            year,
-            month,
-            date
-        })
-
-        if (!success) {
-            alert('업데이트 실패')
-            return
-        }
-        // setDiary(data)
+    const handleProramPatch = async () => {
+        updateDiary()
+        console.log(newDiary)
     }
 
     // input 태그 포커스 아웃이벤트를 처리한다.
-    const handleProgramBlur = async ({currentTarget}) => {
-        await handleProramPatch(currentTarget.value)
+    const handleProgramBlur = async () => {
+        await handleProramPatch()
         handleToggleProramArea()
     }
 
@@ -67,12 +63,12 @@ const ProgramName = ({year, month, date}) => {
 
     return (
         <div onClick={handleToggleProramArea} className={cx('program')}>
-            <span className={cx({hide: !hide})}>{diary.program}</span>
+            <span className={cx({hide: !hide})}>{programText}</span>
             <input
                 ref={inputRef}
                 className={cx('input', {hide: hide})}
                 type="text"
-                value={diary.program}
+                value={programText}
                 onBlur={handleProgramBlur}
                 onChange={handleProgramChange}
                 onKeyUp={handleKeyUp}
