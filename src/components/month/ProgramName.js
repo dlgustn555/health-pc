@@ -2,15 +2,13 @@ import React, {useState, useRef, useEffect, useContext} from 'react'
 import api from 'utils/api'
 import className from 'classnames/bind'
 
-import {MonthContext} from 'contexts'
-
 import styles from './ProgramName.module.scss'
 
 const cx = className.bind(styles)
 
 const ProgramName = ({diary: {program = ''} = {}, date}) => {
-    const {year, month} = useContext(MonthContext)
-
+    const year = 2020
+    const month = 11
     const [hide, setHide] = useState(true)
     const [updatedProgram, setUpdatedProgram] = useState()
 

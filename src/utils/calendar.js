@@ -35,11 +35,18 @@ const calendar = () => {
     // const year = toDate.getFullYear()
     // const month = toDate.getMonth()
     
+    const toDate = new Date()
+    const today = {
+        year: toDate.getFullYear(),
+        month: toDate.getMonth(),
+        date: toDate.getDate()
+    }
+
     return {
         // thisMonth: getMonthInfo(year, month),
         // prevMonth: getPrevMonth(year, month),
         // nextMonth: getNextMonth(year, month),
-        toDate: new Date(),
+        today,
         getMonthInfo,
         getPrevMonth,
         getNextMonth
