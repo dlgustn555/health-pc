@@ -14,7 +14,10 @@ import styles from './Date.module.scss'
 const cx = className.bind(styles)
 
 const Date = observer(({date = null}) => {
-    const {selectedMonth: {year, month}, diaries} = useDiaryStore()
+    const {
+        selectedMonth: {year, month},
+        diaries
+    } = useDiaryStore()
     const {today} = calendar
 
     const isToDate = today.year === year && today.month === month && today.date === date
@@ -27,7 +30,7 @@ const Date = observer(({date = null}) => {
         <div className={cx('wrapper')}>
             <span className={cx('date', {toDate: isToDate})}>{date}</span>
             <div className={cx('program')}>
-                <ProgramName diary={diary} date={date} />
+                <ProgramName date={date} />
             </div>
             {/* <ul>
                 <li>
