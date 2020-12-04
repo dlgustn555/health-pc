@@ -9,14 +9,24 @@ export const createDiaryStore = () => ({
 
     async getMonthDiaries() {
         const {year, month} = this.selectedMonth
-        const {success, result:{data}} = await api.get(`/diary/month`, { arams: {year, month}})
+        const {success, result:{data}} = await api.get(`/diary/month`, { params: {year, month}})
 
         if (success) {
             this.diaries = data
         }
     },
-
+    
     changeSelectedMonth(changeMonth) {
         this.selectedMonth = changeMonth
+    },
+
+    async updateProgram({_id, program}) {
+        const {success, result: data} = await api.patch('/diary/program/modify', {_id, program})
+        console.log(success, data)
+    },
+
+    async addProgram({year, month, date, program}) {
+        const {success, result: data} = await api.patch('/diary/program/add', {year, month, date, program})
+        console.log(success, data)
     }
 })

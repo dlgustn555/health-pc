@@ -1,19 +1,19 @@
-import React, {useState, useRef, useEffect, useContext} from 'react'
-import api from 'utils/api'
+import React, {useState, useRef, useEffect} from 'react'
 import className from 'classnames/bind'
+
+import {useDiaryStore} from 'contexts'
 
 import styles from './ProgramName.module.scss'
 
 const cx = className.bind(styles)
 
-const ProgramName = ({diary: {program = ''} = {}, date}) => {
-    const year = 2020
-    const month = 11
+const ProgramName = ({_id, date, program}) => {
+    const {selectedMonth: {year, month}, updateProgram, addProgram} = useDiaryStore()
+
     const [hide, setHide] = useState(true)
-    const [updatedProgram, setUpdatedProgram] = useState()
+    const [programName, setProgramName] = useState(program.name)
 
     const inputRef = useRef(null)
-    let timeoutId = 0
 
     // dispaly 상태를 토글한다.
     const handleToggleProramArea = () => {
@@ -22,32 +22,22 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
 
     // 프로그램명 텍스트 변경을 처리한다.
     const handleProgramChange = ({currentTarget: {value}}) => {
-        setUpdatedProgram(value)
-        clearTimeout(timeoutId)
-        timeoutId = setTimeout(() => {
-            handleProramPatch(value)
-        }, 500)
+        setProgramName(value)
     }
 
     // 프로그래명 DB 업데이트를 한다
-    const handleProramPatch = async (program) => {
-        const {success} = await api.patch('/diary/program', {
-            program,
-            year,
-            month,
-            date
-        })
-
-        if (!success) {
-            alert('업데이트 실패')
-            return
-        }
+    const handleProramPatch = async () => {
+        program.name = programName
+       if (program._id) {
+            updateProgram({_id, program})
+       } else {
+            addProgram({year, month, date, program})
+       }
     }
 
     // input 태그 포커스 아웃이벤트를 처리한다.
-    const handleProgramBlur = async ({currentTarget}) => {
-        clearTimeout(timeoutId)
-        await handleProramPatch(currentTarget.value)
+    const handleProgramBlur = async () => {
+        await handleProramPatch()
         handleToggleProramArea()
     }
 
@@ -71,14 +61,12 @@ const ProgramName = ({diary: {program = ''} = {}, date}) => {
 
     return (
         <div onClick={handleToggleProramArea} className={cx('program')}>
-            <span className={cx({hide: !hide})}>{updatedProgram || program}</span>
+            <span className={cx({hide: !hide})}>{programName}</span>
             <input
-                data-year={year}
-                data-month={month}
                 ref={inputRef}
                 className={cx('input', {hide: hide})}
                 type="text"
-                value={updatedProgram || program}
+                value={programName}
                 onBlur={handleProgramBlur}
                 onChange={handleProgramChange}
                 onKeyUp={handleKeyUp}

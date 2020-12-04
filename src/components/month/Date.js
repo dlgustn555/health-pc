@@ -21,27 +21,17 @@ const Date = observer(({date = null}) => {
     const {today} = calendar
 
     const isToDate = today.year === year && today.month === month && today.date === date
-    const diary = diaries.find((d) => {
-        // console.log(typeof d.year, typeof d.month, typeof d.date)
-        return d.year === year && d.month === month && d.date === date
-    })
+    const {_id, programs} = diaries.find((d) => d.year === year && d.month === month && d.date === date) || {programs: []}
 
     return (
         <div className={cx('wrapper')}>
             <span className={cx('date', {toDate: isToDate})}>{date}</span>
             <div className={cx('program')}>
-                <ProgramName date={date} />
+                {programs.map((program, key) => (
+                    <Link key={key} to={ROUTES.PLAN}><ProgramName date={date} program={program} /></Link>
+                ))}
+                <ProgramName _id={_id} date={date} program={{name: ''}} />
             </div>
-            {/* <ul>
-                <li>
-                    <Link to={`${ROUTES.PLAN}?year=${year}&month=${month}&date=${date}`}>
-                        PLAN
-                    </Link>
-                </li>
-                <li>
-                    <Link to={`${ROUTES.PRACTICE}?date=${date}`}>PRACTICE</Link>
-                </li>
-            </ul> */}
         </div>
     )
 })
