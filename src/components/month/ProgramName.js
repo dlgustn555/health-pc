@@ -7,13 +7,15 @@ import styles from './ProgramName.module.scss'
 
 const cx = className.bind(styles)
 
-const ProgramName = ({_id, date, program}) => {
+const ProgramName = ({_id = null, program = '', order, date}) => {
     const {selectedMonth: {year, month}, updateProgram, addProgram} = useDiaryStore()
 
     const [hide, setHide] = useState(true)
-    const [programName, setProgramName] = useState(program.name)
+    const [programName, setProgramName] = useState(program)
 
     const inputRef = useRef(null)
+
+    const isNewDiary = !_id
 
     // dispaly 상태를 토글한다.
     const handleToggleProramArea = () => {
@@ -27,18 +29,28 @@ const ProgramName = ({_id, date, program}) => {
 
     // 프로그래명 DB 업데이트를 한다
     const handleProramPatch = async () => {
-        program.name = programName
-       if (program._id) {
-            updateProgram({_id, program})
-       } else {
-            addProgram({year, month, date, program})
-       }
+        if (programName.length === 0 || programName === program) {
+            return 
+        }
+
+        const fnCall = isNewDiary ? addProgram : updateProgram
+        await fnCall({
+            _id,
+            year,
+            month,
+            date,
+            program: programName,
+            order
+        })
     }
 
     // input 태그 포커스 아웃이벤트를 처리한다.
     const handleProgramBlur = async () => {
         await handleProramPatch()
         handleToggleProramArea()
+        if (programName.length === 0) {
+            setProgramName(program) 
+        }
     }
 
     const handleKeyUp = ({keyCode}) => {

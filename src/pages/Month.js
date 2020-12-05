@@ -25,7 +25,7 @@ const Month = observer(() => {
 
     const {getMonthInfo} = calendar
     const {first, last, total} = getMonthInfo(year, month)
-
+    
     useEffect(() => {
         const {offsetHeight} = bodyRef.current
         setPaddingBottom(Math.floor(offsetHeight))

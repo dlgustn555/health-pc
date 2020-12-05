@@ -14,19 +14,33 @@ export const createDiaryStore = () => ({
         if (success) {
             this.diaries = data
         }
+        return this.diaries
     },
     
     changeSelectedMonth(changeMonth) {
         this.selectedMonth = changeMonth
     },
 
-    async updateProgram({_id, program}) {
-        const {success, result: data} = await api.patch('/diary/program/modify', {_id, program})
-        console.log(success, data)
+    async addProgram({year, month, date, order, program}) {
+        const {success, result: {data}} = await api.post('/diary/program/add', {year, month, date, order, program})
+        if (!success) {
+            return
+        }
+        this.diaries = [...this.diaries, data]
     },
 
-    async addProgram({year, month, date, program}) {
-        const {success, result: data} = await api.patch('/diary/program/add', {year, month, date, program})
-        console.log(success, data)
+    async updateProgram({_id, order, program}) {
+        const {success, result: {data}} = await api.patch('/diary/program/modify', {_id, order, program})
+        if (!success) {
+            return
+        }
+        
+        this.diaries = this.diaries.map((diary) => {
+            if (diary._id === data._id) {
+                diary.program = data.program
+            }
+            console.log(diary)
+            return diary
+        })
     }
 })

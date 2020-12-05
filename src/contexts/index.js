@@ -1,5 +1,5 @@
 import {createContext, useContext} from 'react'
-import {useLocalObservable} from 'mobx-react-lite'
+import {useLocalStore} from 'mobx-react-lite'
 
 import {createDiaryStore} from 'stores/DiaryStore'
 
@@ -9,7 +9,7 @@ const RootContext = createContext()
 export const RootProvider = ({children}) => {
     return (
         <RootContext.Provider value={{
-            DiaryStore: useLocalObservable(createDiaryStore)
+            DiaryStore: useLocalStore(createDiaryStore)
         }}>
             {children}
         </RootContext.Provider>

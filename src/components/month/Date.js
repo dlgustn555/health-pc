@@ -16,21 +16,25 @@ const cx = className.bind(styles)
 const Date = observer(({date = null}) => {
     const {
         selectedMonth: {year, month},
-        diaries
+        diaries,
     } = useDiaryStore()
     const {today} = calendar
 
     const isToDate = today.year === year && today.month === month && today.date === date
-    const {_id, programs} = diaries.find((d) => d.year === year && d.month === month && d.date === date) || {programs: []}
-
+    const todayDiaries = diaries.filter((diary) => (diary.year === year && diary.month === month && diary.date === date))
+    todayDiaries.push({_id: null, program: ''})
+    
     return (
         <div className={cx('wrapper')}>
             <span className={cx('date', {toDate: isToDate})}>{date}</span>
             <div className={cx('program')}>
-                {programs.map((program, key) => (
-                    <Link key={key} to={ROUTES.PLAN}><ProgramName date={date} program={program} /></Link>
-                ))}
-                <ProgramName _id={_id} date={date} program={{name: ''}} />
+                {todayDiaries.map((diary, order) => {
+                    return (
+                        <ProgramName key={order} _id={diary._id} program={diary.program} order={order} date={date} />
+                    // <Link key={order} to={ROUTES.PLAN}>
+                    //     <ProgramName _id={diary._id} program={diary.program} order={order} date={date} />
+                    // </Link>
+                )})}
             </div>
         </div>
     )
