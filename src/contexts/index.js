@@ -1,4 +1,20 @@
 import {createContext, useContext} from 'react'
+import {useLocalStore} from 'mobx-react-lite'
 
-export const MonthContext = createContext('month')
-export const useMonthContext = () => useContext(MonthContext)
+import {createDiaryStore} from 'stores/DiaryStore'
+
+const RootContext = createContext()
+
+// Provider
+export const RootProvider = ({children}) => {
+    return (
+        <RootContext.Provider value={{
+            DiaryStore: useLocalStore(createDiaryStore)
+        }}>
+            {children}
+        </RootContext.Provider>
+    )
+}
+
+// Consumer
+export const useDiaryStore = () => useContext(RootContext).DiaryStore
