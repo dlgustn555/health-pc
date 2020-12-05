@@ -12,7 +12,6 @@ const ProgramName = ({_id = null, program = '', order, date}) => {
 
     const [hide, setHide] = useState(true)
     const [programName, setProgramName] = useState(program)
-
     const inputRef = useRef(null)
 
     const isNewDiary = !_id
@@ -70,6 +69,12 @@ const ProgramName = ({_id = null, program = '', order, date}) => {
             inputRef.current.focus()
         }
     }, [hide])
+
+    useEffect(() => {
+        return () => {
+            setProgramName('')
+        }
+    }, [year, month, date])
 
     return (
         <div onClick={handleToggleProramArea} className={cx('program')}>

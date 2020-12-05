@@ -29,7 +29,7 @@ const Month = observer(() => {
     useEffect(() => {
         const {offsetHeight} = bodyRef.current
         setPaddingBottom(Math.floor(offsetHeight))
-    }, [])
+    }, [isLoaing])
 
     useEffect(() => {
         getMonthDiaries().finally(() => {
