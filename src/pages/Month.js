@@ -5,8 +5,6 @@ import classNames from 'classnames/bind'
 import calendar from 'utils/calendar'
 import {DAY} from 'constants/calendar'
 
-import styles from 'scss/Month.module.scss'
-
 import FixedArea from 'components/common/FixedArea'
 import DateSelector from 'components/month/DateSelector'
 import Header from 'components/month/Header'
@@ -14,6 +12,7 @@ import Date from 'components/month/Date'
 
 import {useDiaryStore} from 'contexts'
 
+import styles from './Month.module.scss'
 const cx = classNames.bind(styles)
 
 const Month = observer(() => {

@@ -1,10 +1,18 @@
 import React, {useEffect, useState} from 'react';
+import {observer} from 'mobx-react-lite'
+import classNames from 'classnames/bind'
+
 import {useDiaryStore} from 'contexts'
 
 import ProgramName from 'components/month/ProgramName'
-import Program from 'components/month/Program'
+import ProgramContent from 'components/month/ProgramContent'
 
-const ProgramDetail = ({match}) => {
+import {PROGRAM_TYPE} from 'constants/calendar'
+
+import styles from './ProgramDetail.module.scss'
+const cx = classNames.bind(styles)
+
+const ProgramDetail = observer(({match}) => {
     const {_id} = match.params
     const {diary, getDiary} = useDiaryStore()
 
@@ -21,13 +29,18 @@ const ProgramDetail = ({match}) => {
     }
 
     return (
-        <>
+        <div className={cx('program_wrapper')}>
             <ProgramName diary={diary} />
-            <div>
-                <Program diary={diary} />
+            <div className={cx('program_list')}> 
+                <div className={cx('program')}>
+                    <ProgramContent type={PROGRAM_TYPE.PLAN} />
+                </div>
+                <div className={cx('program')}>
+                    <ProgramContent type={PROGRAM_TYPE.PACTICE} />
+                </div>
             </div>
-        </>
+        </div>
     );
-};
+});
 
 export default ProgramDetail

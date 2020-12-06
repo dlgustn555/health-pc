@@ -8,7 +8,7 @@ export const days = {
     sunday: ['일', '월', '화', '수', '목', '금', '토']
 }
 
-export const DIARY_TYPE = {
+export const PROGRAM_TYPE = {
     PLAN: 'plan',
     PACTICE: 'practice'
 }

@@ -1,21 +1,12 @@
-import React, {useState, useRef, useEffect} from 'react'
-import className from 'classnames/bind'
-import queryStrign from 'query-string'
-import {useLocation} from 'react-router-dom'
-
-import api from 'utils/api'
+import React, {useState, useRef, useEffect} from 'react';
+import classNames from 'classnames/bind'
 
 import styles from './Program.module.scss'
+const cx = classNames.bind(styles)
 
-const cx = className.bind(styles)
-
-const Program = ({program, type}) => {
-    const {search} = useLocation()
-    const {year, month, date} = queryStrign.parse(search)
-
+const Program = ({program = ''}) => {
     const [hide, setHide] = useState(true)
-    const [text, setText] = useState(program || '')
-    console.log(program || '')
+    const [programText, setProgramText] = useState(program)
 
     const inputRef = useRef(null)
 
@@ -30,12 +21,11 @@ const Program = ({program, type}) => {
     const handleKeyUp = ({keyCode}) => {
         if (keyCode === 13) {
             inputRef.current.blur()
-            // handleAddDiary()
         }
     }
 
     const handleChageText = ({currentTarget}) => {
-        setText(currentTarget.value)
+        setProgramText(currentTarget.value)
     }
 
     useEffect(() => {
@@ -46,23 +36,22 @@ const Program = ({program, type}) => {
         inputRef.current.focus()
     }, [hide])
 
-    console.log(text)
     return (
-        <div className={cx('diary')}>
+         <div className={cx('program')}>
             <div className={cx('field', {hide: !hide})} onClick={handleToggleHide}>
-                <span>{text}</span>
+                <span>{programText}</span>
             </div>
             <input
                 ref={inputRef}
                 className={cx({hide})}
                 type="text"
-                value={text}
+                value={programText}
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
                 onChange={handleChageText}
             />
         </div>
-    )
-}
+    );
+};
 
-export default Program
+export default Program;

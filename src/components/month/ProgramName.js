@@ -19,7 +19,14 @@ const ProgramName = ({diary}) => {
 
     // dispaly 상태를 토글한다.
     const handleToggleProramArea = () => {
-        setHide(!hide)
+        if (hide) {
+            setTimeout(() => {
+                setHide(!hide)        
+            }, 200);
+        } else {
+            setHide(!hide)
+        }
+        
     }
 
     // 프로그램명 텍스트 변경을 처리한다.

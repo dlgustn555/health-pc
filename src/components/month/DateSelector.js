@@ -5,7 +5,7 @@ import calendar from 'utils/calendar'
 
 import {useDiaryStore} from 'contexts'
 
-import styles from 'scss/Month.module.scss'
+import styles from 'pages/Month.module.scss'
 
 const cx = classNames.bind(styles)
 
