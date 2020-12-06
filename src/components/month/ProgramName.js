@@ -7,11 +7,12 @@ import styles from './ProgramName.module.scss'
 
 const cx = className.bind(styles)
 
-const ProgramName = ({_id = null, program = '', order, date}) => {
-    const {selectedMonth: {year, month}, updateProgram, addProgram} = useDiaryStore()
+const ProgramName = ({diary}) => {
+    const {_id, year, month, date, program, order} = diary
+    const {updateProgram, addProgram} = useDiaryStore()
 
     const [hide, setHide] = useState(true)
-    const [programName, setProgramName] = useState(program)
+    const [programName, setProgramName] = useState('')
     const inputRef = useRef(null)
 
     const isNewDiary = !_id
@@ -71,10 +72,8 @@ const ProgramName = ({_id = null, program = '', order, date}) => {
     }, [hide])
 
     useEffect(() => {
-        return () => {
-            setProgramName('')
-        }
-    }, [year, month, date])
+        setProgramName(program)
+    }, [year, month, date, program])
 
     return (
         <div onClick={handleToggleProramArea} className={cx('program')}>

@@ -9,7 +9,7 @@ import styles from './Program.module.scss'
 
 const cx = className.bind(styles)
 
-const Program = ({program, type, handleAddDiary}) => {
+const Program = ({program, type}) => {
     const {search} = useLocation()
     const {year, month, date} = queryStrign.parse(search)
 

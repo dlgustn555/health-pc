@@ -10,18 +10,12 @@ const Index = () => {
             <li>
                 <Link to={ROUTES.MONTH}>Month</Link>
             </li>
-            <li>
-                <Link to={ROUTES.PLAN}>Plan 작성</Link>
-            </li>
-            <li>
-                <Link to={ROUTES.PRACTICE}>Practice 작성</Link>
-            </li>
         </ul>
     )
 }
 
 const Month = lazy(() => import('pages/Month'))
-const Plan = lazy(() => import('pages/Plan'))
+const ProgramDetail = lazy(() => import('pages/ProgramDetail'))
 
 function App() {
     return (
@@ -30,7 +24,7 @@ function App() {
                 <Switch>
                     <Route exact path={ROUTES.HOME} component={Index} />
                     <Route exact path={ROUTES.MONTH} component={Month} />
-                    {/* <Route exact path={ROUTES.PLAN} component={Plan} /> */}
+                    <Route path={ROUTES.PROGRAM_DETAIL} component={ProgramDetail} />
                 </Switch>
             </RootProvider>
         </Suspense>

@@ -1,8 +1,8 @@
 const routes = {
     HOME: '/',
-    PLAN: '/plan',
-    PRACTICE: '/practice',
-    MONTH: '/month'
+    MONTH: '/month',
+    PROGRAM: '/program',
+    PROGRAM_DETAIL: '/program/:_id'
 }
 
 export default routes

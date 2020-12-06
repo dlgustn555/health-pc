@@ -48,7 +48,7 @@ const Month = observer(() => {
                 <Header start={DAY.SUNDAY} />
             </FixedArea>
 
-            {!isLoaing && Array.from(Array(total)).map((_, index) => {
+            {Array.from(Array(total)).map((_, index) => {
                 const date = index < first.day ? null : index === first.day ? 1 : index - first.day + 1
                 return <Date key={index} date={date > last.date ? null : date} />
             })}
