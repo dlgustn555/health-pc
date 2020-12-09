@@ -36,7 +36,7 @@ const ProgramDetail = observer(({match}) => {
                     <ProgramContent type={PROGRAM_TYPE.PLAN} />
                 </div>
                 <div className={cx('program')}>
-                    <ProgramContent type={PROGRAM_TYPE.PACTICE} />
+                    <ProgramContent type={PROGRAM_TYPE.PRACTICE} />
                 </div>
             </div>
         </div>

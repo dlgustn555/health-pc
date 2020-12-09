@@ -9,7 +9,7 @@ const cx = className.bind(styles)
 
 const ProgramName = ({diary}) => {
     const {_id, year, month, date, program, order} = diary
-    const {updateProgram, addProgram} = useDiaryStore()
+    const {updateProgramName, addProgramName} = useDiaryStore()
 
     const [hide, setHide] = useState(true)
     const [programName, setProgramName] = useState('')
@@ -17,7 +17,7 @@ const ProgramName = ({diary}) => {
 
     const isNewDiary = !_id
 
-    // dispaly 상태를 토글한다.
+    // display 상태를 토글한다.
     const handleToggleProramArea = () => {
         if (hide) {
             setTimeout(() => {
@@ -40,8 +40,8 @@ const ProgramName = ({diary}) => {
             return 
         }
 
-        const fnCall = isNewDiary ? addProgram : updateProgram
-        await fnCall({
+        const executeFn = isNewDiary ? addProgramName : updateProgramName
+        await executeFn({
             _id,
             year,
             month,

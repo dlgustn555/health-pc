@@ -10,5 +10,5 @@ export const days = {
 
 export const PROGRAM_TYPE = {
     PLAN: 'plan',
-    PACTICE: 'practice'
+    PRACTICE: 'practice'
 }

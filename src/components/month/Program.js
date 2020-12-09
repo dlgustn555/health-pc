@@ -1,10 +1,14 @@
 import React, {useState, useRef, useEffect} from 'react';
 import classNames from 'classnames/bind'
 
+import {useDiaryStore} from 'contexts'
+
 import styles from './Program.module.scss'
 const cx = classNames.bind(styles)
 
-const Program = ({program = ''}) => {
+const Program = ({order, program = '', type}) => {
+    const {updateProgram} = useDiaryStore()
+
     const [hide, setHide] = useState(true)
     const [programText, setProgramText] = useState(program)
 
@@ -15,6 +19,9 @@ const Program = ({program = ''}) => {
     }
 
     const handleBlur = async () => {
+        if (programText.length > 0 && programText !== program) {
+            await updateProgram({order, program: programText, type})
+        }
         handleToggleHide()
     }
 
