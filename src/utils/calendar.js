@@ -31,10 +31,6 @@ const calendar = () => {
         return getMonthInfo(nextMonthDate.getFullYear(), nextMonthDate.getMonth())
     }
 
-    // const toDate = new Date()
-    // const year = toDate.getFullYear()
-    // const month = toDate.getMonth()
-    
     const toDate = new Date()
     const today = {
         year: toDate.getFullYear(),
@@ -43,9 +39,6 @@ const calendar = () => {
     }
 
     return {
-        // thisMonth: getMonthInfo(year, month),
-        // prevMonth: getPrevMonth(year, month),
-        // nextMonth: getNextMonth(year, month),
         today,
         getMonthInfo,
         getPrevMonth,
