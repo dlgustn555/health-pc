@@ -1,0 +1,12 @@
+.program_wrapper {
+    text-align: center;
+    width: 900px;
+    .program_list {
+        display: flex; 
+        width: 1200px;
+        .program {
+            width: 50%;
+            margin: 10px 20px;
+        }
+    }
+}

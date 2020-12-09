@@ -1,0 +1,14 @@
+.program {
+    height: 24px;
+    display: inline-block;
+    margin: 2px auto;
+    width: 80%;
+    cursor: pointer;
+    background-color: #dcdcdc;
+    .hide {
+        display: none;
+    }
+    .input {
+        width: 100%;
+    }
+}

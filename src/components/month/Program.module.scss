@@ -1,0 +1,17 @@
+.program {
+    margin: 4px 0;
+    .hide {
+        display: none;
+    }
+    .field {
+        background-color: #e0ebff;
+        height: 30px;
+        border-radius: 10px;
+        vertical-align: middle;
+        padding-left: 10px;
+    }
+    input {
+        width: 95%;
+        height: 23px;
+    }
+}
