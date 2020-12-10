@@ -6,7 +6,8 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -18,10 +19,12 @@ module.exports = {
     "plugins": [
         "react",
         "jsx-a11y",
-        "react-hooks"
+        "react-hooks",
+        "prettier"
     ],
     "parser": "babel-eslint",
     "rules": {
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "prettier/prettier": "error"
     }
 };

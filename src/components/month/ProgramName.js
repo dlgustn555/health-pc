@@ -21,12 +21,11 @@ const ProgramName = ({diary}) => {
     const handleToggleProramArea = () => {
         if (hide) {
             setTimeout(() => {
-                setHide(!hide)        
-            }, 200);
+                setHide(!hide)
+            }, 200)
         } else {
             setHide(!hide)
         }
-        
     }
 
     // 프로그램명 텍스트 변경을 처리한다.
@@ -37,7 +36,7 @@ const ProgramName = ({diary}) => {
     // 프로그래명 DB 업데이트를 한다
     const handleProramPatch = async () => {
         if (programName.length === 0 || programName === program) {
-            return 
+            return
         }
 
         const executeFn = isNewDiary ? addProgramName : updateProgramName
@@ -47,7 +46,7 @@ const ProgramName = ({diary}) => {
             month,
             date,
             program: programName,
-            order
+            order,
         })
     }
 
@@ -56,7 +55,7 @@ const ProgramName = ({diary}) => {
         await handleProramPatch()
         handleToggleProramArea()
         if (programName.length === 0) {
-            setProgramName(program) 
+            setProgramName(program)
         }
     }
 

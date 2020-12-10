@@ -8,9 +8,10 @@ const RootContext = createContext()
 // Provider
 export const RootProvider = ({children}) => {
     return (
-        <RootContext.Provider value={{
-            DiaryStore: useLocalStore(createDiaryStore)
-        }}>
+        <RootContext.Provider
+            value={{
+                DiaryStore: useLocalStore(createDiaryStore),
+            }}>
             {children}
         </RootContext.Provider>
     )

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react'
 import classNames from 'classnames/bind'
 
 import {useDiaryStore} from 'contexts'
@@ -44,7 +44,7 @@ const Program = ({order, program = '', type}) => {
     }, [hide])
 
     return (
-         <div className={cx('program')}>
+        <div className={cx('program')}>
             <div className={cx('field', {hide: !hide})} onClick={handleToggleHide}>
                 <span>{programText}</span>
             </div>
@@ -58,7 +58,7 @@ const Program = ({order, program = '', type}) => {
                 onChange={handleChageText}
             />
         </div>
-    );
-};
+    )
+}
 
-export default Program;
+export default Program

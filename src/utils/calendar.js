@@ -9,13 +9,13 @@ const calendar = () => {
             month,
             first: {
                 date: 1,
-                day: firstDate.getDay()
+                day: firstDate.getDay(),
             },
             last: {
                 date: lastDate.getDate(),
-                day: lastDate.getDay()
+                day: lastDate.getDay(),
             },
-            total: firstDate.getDay() + lastDate.getDate() + 6 - lastDate.getDay()
+            total: firstDate.getDay() + lastDate.getDate() + 6 - lastDate.getDay(),
         }
     }
 
@@ -35,14 +35,14 @@ const calendar = () => {
     const today = {
         year: toDate.getFullYear(),
         month: toDate.getMonth(),
-        date: toDate.getDate()
+        date: toDate.getDate(),
     }
 
     return {
         today,
         getMonthInfo,
         getPrevMonth,
-        getNextMonth
+        getNextMonth,
     }
 }
 

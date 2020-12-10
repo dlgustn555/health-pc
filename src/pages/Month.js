@@ -16,15 +16,18 @@ import styles from './Month.module.scss'
 const cx = classNames.bind(styles)
 
 const Month = observer(() => {
-    const {selectedMonth: {year, month}, getMonthDiaries} = useDiaryStore()
-    
+    const {
+        selectedMonth: {year, month},
+        getMonthDiaries,
+    } = useDiaryStore()
+
     const bodyRef = useRef(null)
     const [paddingBottom, setPaddingBottom] = useState('')
     const [isLoaing, setIsLoading] = useState(true)
 
     const {getMonthInfo} = calendar
     const {first, last, total} = getMonthInfo(year, month)
-    
+
     useEffect(() => {
         const {offsetHeight} = bodyRef.current
         setPaddingBottom(Math.floor(offsetHeight))
@@ -37,11 +40,7 @@ const Month = observer(() => {
     }, [getMonthDiaries, year, month])
 
     return (
-        <div
-            ref={bodyRef}
-            className={cx('month-wrapper')}
-            style={{paddingBottom}}>
-            
+        <div ref={bodyRef} className={cx('month-wrapper')} style={{paddingBottom}}>
             <FixedArea>
                 <DateSelector />
                 <Header start={DAY.SUNDAY} />

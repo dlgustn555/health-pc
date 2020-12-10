@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react'
 import {useLocation} from 'react-router-dom'
 import classNames from 'classnames/bind'
 
@@ -11,7 +11,7 @@ const FixedArea = ({children}) => {
     const initPaddingTop = useRef('')
     const [offsetHeight, setOffsetHeight] = useState(0)
     const {pathname} = useLocation()
-    
+
     useEffect(() => {
         const {parentElement} = fixedRef.current
         setOffsetHeight(fixedRef.current.offsetHeight)
@@ -27,7 +27,7 @@ const FixedArea = ({children}) => {
         <div ref={fixedRef} className={cx('fixed-area')}>
             {children}
         </div>
-    );
-};
+    )
+}
 
-export default FixedArea;
+export default FixedArea

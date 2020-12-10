@@ -8,7 +8,7 @@ const ProgramContent = observer(({type}) => {
     const {diary} = useDiaryStore()
     const programs = diary[type].slice() || []
     programs.push('')
-    
+
     return (
         <>
             {programs.map((program, order) => (

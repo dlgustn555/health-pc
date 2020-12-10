@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import classNames from 'classnames/bind'
 
@@ -31,7 +31,7 @@ const ProgramDetail = observer(({match}) => {
     return (
         <div className={cx('program_wrapper')}>
             <ProgramName diary={diary} />
-            <div className={cx('program_list')}> 
+            <div className={cx('program_list')}>
                 <div className={cx('program')}>
                     <ProgramContent type={PROGRAM_TYPE.PLAN} />
                 </div>
@@ -40,7 +40,7 @@ const ProgramDetail = observer(({match}) => {
                 </div>
             </div>
         </div>
-    );
-});
+    )
+})
 
 export default ProgramDetail

@@ -10,19 +10,23 @@ import styles from 'pages/Month.module.scss'
 const cx = classNames.bind(styles)
 
 const DateSelector = observer(() => {
-    const {selectedMonth: {year, month}, changeSelectedMonth} = useDiaryStore()
+    const {
+        selectedMonth: {year, month},
+        changeSelectedMonth,
+    } = useDiaryStore()
     const {getPrevMonth, getNextMonth} = calendar
 
     const handleMonthChange = ({currentTarget}) => {
         const {dataset} = currentTarget
         const changeMonth = dataset.month === 'preve' ? getPrevMonth(year, month) : getNextMonth(year, month)
         changeSelectedMonth(changeMonth)
-
     }
 
     return (
         <div className={cx('dateSelector')}>
-            <button data-month="preve" onClick={handleMonthChange}>◀</button>
+            <button data-month="preve" onClick={handleMonthChange}>
+                ◀
+            </button>
             <span>
                 <span className={cx('year')}>{year}</span>
                 <span>.</span>
@@ -30,7 +34,9 @@ const DateSelector = observer(() => {
                 <span className={cx('monthText')}>월</span>
             </span>
 
-            <button data-month="next" onClick={handleMonthChange}>▶</button>
+            <button data-month="next" onClick={handleMonthChange}>
+                ▶
+            </button>
         </div>
     )
 })

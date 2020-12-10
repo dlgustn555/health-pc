@@ -22,9 +22,9 @@ const Date = observer(({date = null}) => {
     const history = useHistory()
 
     const isToDate = today.year === year && today.month === month && today.date === date
-    const todayDiaries = diaries.filter((diary) => (diary.year === year && diary.month === month && diary.date === date))
+    const todayDiaries = diaries.filter((diary) => diary.year === year && diary.month === month && diary.date === date)
     todayDiaries.push({_id: null, program: '', year, month, date})
-    
+
     const handleDoubleClick = (diary) => () => {
         if (diary._id) {
             history.push(`${ROUTES.PROGRAM}/${diary._id}`)
