@@ -1,26 +1,23 @@
-import {lazy, Suspense} from 'react'
+import React, {lazy, Suspense, useCallback} from 'react'
 import {Switch, Route, Link} from 'react-router-dom'
 
 import ROUTES from 'constants/routes'
 import {RootProvider} from 'contexts'
 
-const Index = () => {
-    return (
-        <ul>
-            <li>
-                <Link to={ROUTES.MONTH}>Month</Link>
-            </li>
-            <li>
-                테스트!!!22SS331111111 
-            </li>
-        </ul>
-    )
-}
-
 const Month = lazy(() => import('pages/Month'))
 const ProgramDetail = lazy(() => import('pages/ProgramDetail'))
 
 function App() {
+    const Index = useCallback(() => {
+        return (
+            <ul>
+                <li>
+                    <Link to={ROUTES.MONTH}>Month</Link>
+                </li>
+            </ul>
+        )
+    }, [])
+
     return (
         <Suspense fallback={<></>}>
             <RootProvider>
