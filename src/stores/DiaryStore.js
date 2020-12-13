@@ -95,4 +95,18 @@ export const createDiaryStore = () => ({
             }
         }
     },
+
+    async deleteProgram({_id}) {
+        const {
+            success,
+            result: {data},
+        } = await api.delete(`/diary/program/delete/${_id}`)
+
+        if (success) {
+            const filtredDiaryies = this.diaries.filter((diary) => diary._id !== data._id)
+            this.diaries = filtredDiaryies
+        }
+
+        return success
+    },
 })

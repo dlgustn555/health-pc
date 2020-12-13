@@ -7,6 +7,7 @@ import ROUTES from 'constants/routes'
 import calendar from 'utils/calendar'
 
 import ProgramName from 'components/month/ProgramName'
+import ProgramDelete from 'components/month/ProgramDelete'
 
 import {useDiaryStore} from 'contexts'
 
@@ -39,6 +40,7 @@ const Date = observer(({date = null}) => {
                 return (
                     <div key={order} className={cx('program')} onDoubleClick={handleDoubleClick(diary)}>
                         <ProgramName diary={diary} />
+                        <ProgramDelete _id={diary._id} />
                     </div>
                 )
             })}
