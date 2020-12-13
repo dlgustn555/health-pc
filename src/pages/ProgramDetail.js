@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import classNames from 'classnames/bind'
+import {useHistory} from 'react-router-dom'
 
 import {useDiaryStore} from 'contexts'
 
@@ -8,6 +9,7 @@ import ProgramName from 'components/month/ProgramName'
 import ProgramContent from 'components/month/ProgramContent'
 import ProgramImage from 'components/month/ProgramImage'
 
+import ROUTES from 'constants/routes'
 import {PROGRAM_TYPE} from 'constants/calendar'
 
 import styles from './ProgramDetail.module.scss'
@@ -18,6 +20,11 @@ const ProgramDetail = observer(({match}) => {
     const {diary, getDiary} = useDiaryStore()
 
     const [isLoading, setIsLoading] = useState(true)
+    const {push} = useHistory()
+
+    const handleBackButton = () => {
+        push(ROUTES.MONTH)
+    }
 
     useEffect(() => {
         getDiary({_id}).finally(() => {
@@ -44,6 +51,9 @@ const ProgramDetail = observer(({match}) => {
                 <ProgramImage />
                 <ProgramImage />
                 <ProgramImage />
+            </div>
+            <div>
+                <button onClick={handleBackButton}>목록으로</button>
             </div>
         </div>
     )

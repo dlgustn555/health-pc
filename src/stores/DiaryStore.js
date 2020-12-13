@@ -83,19 +83,15 @@ export const createDiaryStore = () => ({
             result: {data},
         } = await api.patch('/diary/program/content', {_id, order, program, type})
 
-        const isNewProgramAdd = this.diary[type].length === order
-
         if (success) {
-            const updatedProgram = isNewProgramAdd
-                ? [...this.diary[type], data]
-                : this.diary[type].map((p, index) => (index === order ? data : p))
             this.diary = {
                 ...this.diary,
-                [type]: [...updatedProgram],
+                [type]: [...data[type]],
             }
         }
     },
 
+    // 프로그램을 삭제한다.
     async deleteProgram({_id}) {
         const {
             success,
@@ -105,6 +101,28 @@ export const createDiaryStore = () => ({
         if (success) {
             const filtredDiaryies = this.diaries.filter((diary) => diary._id !== data._id)
             this.diaries = filtredDiaryies
+        }
+
+        return success
+    },
+
+    // 프로그램 내용을 삭제한다.
+    async deleteProgramContent({order, type}) {
+        const {_id} = this.diary
+        const {
+            success,
+            result: {data},
+        } = await api.put('/diary/program/content', {_id, order, type})
+
+        if (success) {
+            this.diary = {
+                ...this.diary,
+                [type]: [...data[type]],
+            }
+
+            this.diaries = this.diaries.map((diary) => {
+                return diary._id === data._id ? data : diary
+            })
         }
 
         return success

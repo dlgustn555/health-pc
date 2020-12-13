@@ -6,8 +6,8 @@ import {useDiaryStore} from 'contexts'
 import styles from './Program.module.scss'
 const cx = classNames.bind(styles)
 
-const Program = ({order, program = '', type}) => {
-    const {updateProgram} = useDiaryStore()
+const Program = ({order = null, program = '', type = ''}) => {
+    const {updateProgram, deleteProgramContent} = useDiaryStore()
 
     const [hide, setHide] = useState(true)
     const [programText, setProgramText] = useState(program)
@@ -35,6 +35,10 @@ const Program = ({order, program = '', type}) => {
         setProgramText(currentTarget.value)
     }
 
+    const handleDeleteProgramContent = async () => {
+        deleteProgramContent({order, type})
+    }
+
     useEffect(() => {
         if (!inputRef || inputRef.current.classList.contains(cx('hide'))) {
             return
@@ -57,6 +61,7 @@ const Program = ({order, program = '', type}) => {
                 onBlur={handleBlur}
                 onChange={handleChageText}
             />
+            <button onClick={handleDeleteProgramContent}>X</button>
         </div>
     )
 }

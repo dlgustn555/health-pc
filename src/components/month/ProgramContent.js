@@ -11,9 +11,9 @@ const ProgramContent = observer(({type}) => {
 
     return (
         <>
-            {programs.map((program, order) => (
-                <Program key={order} order={order} program={program} type={type} />
-            ))}
+            {programs.map((program, order) => {
+                return <Program key={`${order}-${program}`} order={order} program={program} type={type} />
+            })}
         </>
     )
 })
