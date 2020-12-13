@@ -65,6 +65,13 @@ const ProgramName = ({diary}) => {
         }
     }
 
+    const handleMouseOver = () => {
+        if (!hide) {
+            return
+        }
+        console.log('handleMouseOver: ', hide)
+    }
+
     // input 태그 Show > input 태그에 auto focusing
     useEffect(() => {
         if (!inputRef) {
@@ -82,7 +89,7 @@ const ProgramName = ({diary}) => {
     }, [year, month, date, program])
 
     return (
-        <div onClick={handleToggleProramArea} className={cx('program')}>
+        <div onClick={handleToggleProramArea} onMouseOver={handleMouseOver} className={cx('program')}>
             <span className={cx({hide: !hide})}>{programName}</span>
             <input
                 ref={inputRef}

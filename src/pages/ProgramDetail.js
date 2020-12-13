@@ -6,6 +6,7 @@ import {useDiaryStore} from 'contexts'
 
 import ProgramName from 'components/month/ProgramName'
 import ProgramContent from 'components/month/ProgramContent'
+import ProgramImage from 'components/month/ProgramImage'
 
 import {PROGRAM_TYPE} from 'constants/calendar'
 
@@ -38,6 +39,11 @@ const ProgramDetail = observer(({match}) => {
                 <div className={cx('program')}>
                     <ProgramContent type={PROGRAM_TYPE.PRACTICE} />
                 </div>
+            </div>
+            <div style={{width: '100%'}}>
+                <ProgramImage />
+                <ProgramImage />
+                <ProgramImage />
             </div>
         </div>
     )
