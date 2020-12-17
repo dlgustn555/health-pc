@@ -127,4 +127,25 @@ export const createDiaryStore = () => ({
 
         return success
     },
+
+    // 업로드한 이미지 binary 업데이트 한다.
+    async updateUploadImage({order, file}) {
+        const {_id} = this.diary
+        const {
+            success,
+            result: {data},
+        } = await api.patch('/diary/image/upload', {_id, order, file})
+
+        if (success) {
+            this.diary = {
+                ...this.diary,
+                images: [...data.images],
+            }
+
+            this.diaries = this.diaries.map((diary) => {
+                return diary._id === data._id ? data : diary
+            })
+        }
+        return success
+    },
 })

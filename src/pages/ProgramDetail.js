@@ -48,9 +48,9 @@ const ProgramDetail = observer(({match}) => {
                 </div>
             </div>
             <div style={{width: '100%'}}>
-                <ProgramImage />
-                <ProgramImage />
-                <ProgramImage />
+                <ProgramImage order={0} />
+                <ProgramImage order={1} />
+                <ProgramImage order={2} />
             </div>
             <div>
                 <button onClick={handleBackButton}>목록으로</button>
