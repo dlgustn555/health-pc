@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef, useEffect, memo} from 'react'
 import className from 'classnames/bind'
 
 import {useDiaryStore} from 'contexts'
@@ -97,4 +97,4 @@ const ProgramName = ({diary}) => {
     )
 }
 
-export default ProgramName
+export default memo(ProgramName)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 
 import {useDiaryStore} from 'contexts'
 
@@ -12,4 +12,4 @@ const ProgramDelete = ({_id}) => {
     return <button onClick={handleDeleteProgram}>X</button>
 }
 
-export default ProgramDelete
+export default memo(ProgramDelete)

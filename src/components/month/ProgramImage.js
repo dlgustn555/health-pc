@@ -11,8 +11,8 @@ import emptyImg from 'images/empty.JPG'
 
 const ProgramImage = observer(({order}) => {
     const {diary, updateUploadImage} = useDiaryStore()
-
-    const [imageFile, setImageFile] = useState(diary.images[order])
+    const images = diary.images.slice()
+    const [imageFile, setImageFile] = useState(images[order] || '')
 
     const reader = new FileReader()
 

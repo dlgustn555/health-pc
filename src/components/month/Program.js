@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef, useEffect, memo} from 'react'
 import classNames from 'classnames/bind'
 
 import {useDiaryStore} from 'contexts'
@@ -66,4 +66,4 @@ const Program = ({order = null, program = '', type = ''}) => {
     )
 }
 
-export default Program
+export default memo(Program)
