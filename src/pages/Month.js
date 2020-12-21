@@ -9,6 +9,7 @@ import FixedArea from 'components/common/FixedArea'
 import DateSelector from 'components/month/DateSelector'
 import Header from 'components/month/Header'
 import Date from 'components/month/Date'
+import {ImageSlideButton} from 'components/month/ImageSlide'
 
 import {useDiaryStore} from 'contexts'
 
@@ -43,9 +44,9 @@ const Month = observer(() => {
         <div ref={bodyRef} className={cx('month-wrapper')} style={{paddingBottom}}>
             <FixedArea>
                 <DateSelector />
+                <ImageSlideButton>이미지 슬라이드</ImageSlideButton>
                 <Header start={DAY.SUNDAY} />
             </FixedArea>
-
             {Array.from(Array(total)).map((_, index) => {
                 const date = index < first.day ? null : index === first.day ? 1 : index - first.day + 1
                 return <Date key={index} date={date > last.date ? null : date} />
