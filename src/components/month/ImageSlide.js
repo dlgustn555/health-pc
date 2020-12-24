@@ -1,9 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import {observer} from 'mobx-react-lite'
+import classNames from 'classnames/bind'
 
 import {useDiaryStore} from 'contexts'
 
 import DimmedLayer from 'components/common/DimmedLayer'
+
+import styles from './ImageSlide.module.scss'
+
+const cx = classNames.bind(styles)
 
 export const ImageSlideButton = ({children}) => {
     const [showImageSlide, toggleImageSlide] = useState(false)
@@ -25,14 +30,14 @@ export const ImageSlideButton = ({children}) => {
 }
 
 const ImageSlide = observer(({closeButton}) => {
-    const {diaries, getDiary} = useDiaryStore()
+    const {diaries, getMonthDiaries} = useDiaryStore()
     const [isLoading, setIsLoaing] = useState(true)
 
     const emptyDiaries = diaries.length === 0
 
     useEffect(() => {
         if (emptyDiaries) {
-            getDiary().then(() => {
+            getMonthDiaries().then(() => {
                 setIsLoaing(false)
             })
         } else {
@@ -57,7 +62,7 @@ const ImageSlide = observer(({closeButton}) => {
 
                                 <div>
                                     {diary.images.map((image, index) => (
-                                        <img width={266} height={406} key={`${diary._id}_${index}`} src={image} />
+                                        <img className={cx('image')} key={`${diary._id}_${index}`} src={image} />
                                     ))}
                                 </div>
                             </li>
